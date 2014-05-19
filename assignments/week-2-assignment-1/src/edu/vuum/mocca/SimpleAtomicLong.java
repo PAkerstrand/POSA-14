@@ -1,3 +1,4 @@
+package edu.vuum.mocca;
 // Import the necessary Java synchronization and scheduling classes.
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -84,8 +85,8 @@ class SimpleAtomicLong
         // TODO -- you fill in here
         mRWLock.writeLock().lock();
         try {
-            mValue += 1;
             value = mValue;
+            mValue += 1;
         } finally {
             mRWLock.writeLock().unlock();
         }
