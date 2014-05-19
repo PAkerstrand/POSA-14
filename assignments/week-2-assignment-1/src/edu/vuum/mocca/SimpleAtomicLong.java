@@ -20,7 +20,9 @@ class SimpleAtomicLong
     /**
      * The ReentrantReadWriteLock used to serialize access to mValue.
      */
-    // TODO - replace the null with the appropriate initialization:
+
+    // TODO -- you fill in here by replacing the null with an
+    // initialization of ReentrantReadWriteLock.
     private ReentrantReadWriteLock mRWLock = new ReentrantReadWriteLock();
 
     /**
@@ -28,6 +30,7 @@ class SimpleAtomicLong
      */
     public SimpleAtomicLong(long initialValue)
     {
+        // TODO -- you fill in here
         mValue = initialValue;
     }
 
@@ -39,7 +42,7 @@ class SimpleAtomicLong
     public long get()
     {
         long value;
-        // TODO - you fill in here, using a readLock()
+        // TODO -- you fill in here
         mRWLock.readLock().lock();
         try {
             value = mValue;
@@ -56,8 +59,9 @@ class SimpleAtomicLong
      */
     public long decrementAndGet()
     {
-        long value;
-        // TODO - you fill in here, using a writeLock()
+        long value = 0;
+
+        // TODO -- you fill in here
         mRWLock.writeLock().lock();
         try {
             mValue -= 1;
@@ -75,8 +79,9 @@ class SimpleAtomicLong
      */
     public long getAndIncrement()
     {
-        long value;
-        // TODO - you fill in here, using a writeLock()
+        long value = 0;
+
+        // TODO -- you fill in here
         mRWLock.writeLock().lock();
         try {
             mValue += 1;
@@ -94,8 +99,9 @@ class SimpleAtomicLong
      */
     public long getAndDecrement()
     {
-        long value;
-        // TODO - you fill in here, using a writeLock()
+        long value = 0;
+
+        // TODO -- you fill in here
         mRWLock.writeLock().lock();
         try {
             value = mValue;
@@ -113,8 +119,9 @@ class SimpleAtomicLong
      */
     public long incrementAndGet()
     {
-        long value;
-        // TODO - you fill in here, using a writeLock()
+        long value = 0;
+
+        // TODO -- you fill in here
         mRWLock.writeLock().lock();
         try {
             mValue += 1;
