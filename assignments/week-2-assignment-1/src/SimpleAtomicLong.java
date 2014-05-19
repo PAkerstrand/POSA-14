@@ -21,14 +21,14 @@ class SimpleAtomicLong
      * The ReentrantReadWriteLock used to serialize access to mValue.
      */
     // TODO - replace the null with the appropriate initialization:
-    private ReentrantReadWriteLock mRWLock = null;
+    private ReentrantReadWriteLock mRWLock = new ReentrantReadWriteLock();
 
     /**
      * Creates a new SimpleAtomicLong with the given initial value.
      */
     public SimpleAtomicLong(long initialValue)
     {
-        // TODO - you fill in here
+        mValue = initialValue;
     }
 
     /**
@@ -40,6 +40,12 @@ class SimpleAtomicLong
     {
         long value;
         // TODO - you fill in here, using a readLock()
+        mRWLock.readLock().lock();
+        try {
+            value = mValue;
+        } finally {
+            mRWLock.readLock().unlock();
+        }
         return value;
     }
 
@@ -52,6 +58,13 @@ class SimpleAtomicLong
     {
         long value;
         // TODO - you fill in here, using a writeLock()
+        mRWLock.writeLock().lock();
+        try {
+            mValue -= 1;
+            value = mValue;
+        } finally {
+            mRWLock.writeLock().unlock();
+        }
         return value;
     }
 
@@ -64,6 +77,13 @@ class SimpleAtomicLong
     {
         long value;
         // TODO - you fill in here, using a writeLock()
+        mRWLock.writeLock().lock();
+        try {
+            mValue += 1;
+            value = mValue;
+        } finally {
+            mRWLock.writeLock().unlock();
+        }
         return value;
     }
 
@@ -76,6 +96,13 @@ class SimpleAtomicLong
     {
         long value;
         // TODO - you fill in here, using a writeLock()
+        mRWLock.writeLock().lock();
+        try {
+            value = mValue;
+            mValue -= 1;
+        } finally {
+            mRWLock.writeLock().unlock();
+        }
         return value;
     }
 
@@ -88,6 +115,13 @@ class SimpleAtomicLong
     {
         long value;
         // TODO - you fill in here, using a writeLock()
+        mRWLock.writeLock().lock();
+        try {
+            mValue += 1;
+            value = mValue;
+        } finally {
+            mRWLock.writeLock().unlock();
+        }
         return value;
     }
 }
