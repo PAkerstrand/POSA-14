@@ -1,11 +1,11 @@
 package edu.vuum.mocca;
 
+import java.lang.ref.WeakReference;
+
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
-
-import java.lang.ref.WeakReference;
 
 /**
  * This is the main activity that the program uses to start the
@@ -15,14 +15,14 @@ import java.lang.ref.WeakReference;
  * downloading the image, it stores it on the Android file system,
  * then notifies this activity using the Messenger IPC mechanism
  * discussed in the class.
- * <p/>
+ * 
  * Starting services to run synchronously from the asynchronous UI
  * Thread is an example of the Half-Sync/Half-Async Pattern.  Starting
  * services using Intents is an example of the Command Processor
  * Pattern. This activity, the Creator, creates a Command in the form
  * of an Intent. The Intent is received by the service process, which
  * plays the role of the Executor.
- * <p/>
+ * 
  * Returning a result using Messages and Handlers is an example of the
  * Active Object Pattern. The Service must invoke a method to update
  * the UI. However, the service thread is not allowed to interact with
@@ -31,7 +31,7 @@ import java.lang.ref.WeakReference;
  * role of Active Object. The message is then passed to the UI
  * thread's handler, which eventually executes the request on the UI
  * Thread.
- * <p/>
+ * 
  * Note: all UI functionality has been factored out into
  * DownloadBase. If you wish to display an image, use
  * displayBitmap(). If you want to get the URL from the EditText
@@ -42,10 +42,10 @@ public class DownloadActivity extends DownloadBase {
      * This is the handler used for handling messages sent by a
      * Messenger.  It receives a message containing a pathname to an
      * image and displays that image in the ImageView.
-     * <p/>
+     * 
      * The handler plays several roles in the Active Object pattern,
      * including Proxy, Future, and Servant.
-     * <p/>
+     * 
      * Please use displayBitmap() defined in DownloadBase
      */
     static class MessengerHandler extends Handler {
@@ -61,12 +61,12 @@ public class DownloadActivity extends DownloadBase {
          */
         public MessengerHandler(DownloadActivity outer) {
             outerClass = new WeakReference<DownloadActivity>(outer);
-        }
-
-        // Handle any messages that get sent to this Handler
-        @Override
-        public void handleMessage(Message msg) {
-
+    	}
+    	
+    	// Handle any messages that get sent to this Handler
+    	@Override
+		public void handleMessage(Message msg) {
+    		
             // Get an actual reference to the DownloadActivity
             // from the WeakReference.
             final DownloadActivity activity = outerClass.get();
@@ -116,17 +116,17 @@ public class DownloadActivity extends DownloadBase {
                 // returned from the makeIntent() factory method.
                 startService(DownloadIntentService.makeIntent(this, handler, getUrlString()));
 
-                which = "Starting IntentService";
-                break;
+            which = "Starting DownloadIntentService";
+            break;
+            
+        case R.id.thread_pool_button:
+            // TODO - You fill in here to start the
+            // ThreadPoolDownloadService with the appropriate Intent
+            // returned from the makeIntent() factory method.
+            startService(ThreadPoolDownloadService.makeIntent(this, handler, getUrlString()));
 
-            case R.id.thread_pool_button:
-                // TODO - You fill in here to start the
-                // ThreadPoolDownloadService with the appropriate Intent
-                // returned from the makeIntent() factory method.
-                startService(ThreadPoolDownloadService.makeIntent(this, handler, getUrlString()));
-
-                which = "Starting ThreadPoolDownloadService";
-                break;
+            which = "Starting ThreadPoolDownloadService";
+            break;
 
         }
 
